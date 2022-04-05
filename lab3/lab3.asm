@@ -3,17 +3,17 @@ include win64a.inc
 arr1 dw 10, 6, 8, 3, 2, 7, 19, 9, 11, 4, 22, 13, 41, 17; 14 numbers
 len1 EQU ($-arr1)/type arr1; 10
 res1 dd len1 dup(0), 0
-buf1 dw len1 dup(0), 0
+buf1 dq 500 dup(0), 0
 
 bit1 db 0
 bit2 db 0
 frmt db "Using command VPHMINPOSUW", 10, 10,
-"10, 6, 8, 3, 2, 7, 19, 9, 11, 4, 22, 13, 41, 17", 10,
-"Answer:  %d  |  %d", 10, 10,
+"Answer:  %hu  %hu  %hu  %hu", 10, 10,
 "Author: Ayoub El-Haddadi, gr. KH-919 i.e", 10,
 "Task #8, LR 3 - Injection with API", 0
-frmt2 db "Answ:  %d %d %d %d %d", 0
-buf2 db 1024 dup(0)
+frmt2 db "Answ:  %hu %hu %hu %hu", 0
+;buf2 db 1024 dup(0)
+;"10, 6, 8, 3, 2, 7, 19, 9, 11, 4, 22, 13, 41, 17", 10,
 .code
 WinMain proc
 sub rsp, 28h ; stack alignment: 28h=32d+8; 8 return address
@@ -43,7 +43,7 @@ tit2 db "Test if AVX2 is supported",0 ;
 szInf2 db "AVX2 IS SUPPORTED!",0 ;
 inf2 db "AVX2 IS NOT SUPPORTED!",0
 tit3 db "Results",0
-res2 dw len1 dup(0)
+res2 dw 200 dup(0)
 
 .code
 mov eax, 7
@@ -90,8 +90,19 @@ mov qword ptr [rdi], r15
 add rdx, 4
 add rdi, 8
 loop m5
+lea rcx, qword ptr [buf1]
+lea rdx, qword ptr [frmt]
+mov r8, 0
+mov r8w, word ptr [res2]
+mov r9w, word ptr [res2 + 2]
+mov ax, res2[8]
+mov word ptr [rbp + 32], ax
+mov ax, res2[10]
+mov qword ptr [rbp + 40], 0
+mov word ptr [rbp + 40], ax
 
-invoke wsprintf,ADDR buf1,ADDR frmt,res2, res2[8];
+call wsprintf
+;invoke wsprintf,ADDR buf1,ADDR frmt2,res2,res2[2],res2[8], res2[10];
 invoke MessageBox, 0, ADDR buf1, ADDR tit3, MB_OK
 
 exit12:
