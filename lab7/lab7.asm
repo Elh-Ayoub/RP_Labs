@@ -16,8 +16,9 @@ _Aelhaddadi segment READ WRITE EXECUTE alias("EAY")
 	WinMain proc
 		sub rsp,28h 
 		mov rbp,rsp
-		mov rcx,0E8h
-		mov rax,$+1Ah 
+		mov rcx,0E1h
+		mov rax,$+1Eh
+		mov r12, rax
 		mov rbx,1828h 
 		lp:
 			sub word ptr [rax], bx
@@ -55,14 +56,14 @@ _Aelhaddadi segment READ WRITE EXECUTE alias("EAY")
 		invoke wsprintf, addr buf1, addr ifmt, res, res[8], res[16], res[24]
 		invoke MessageBox, 0, addr buf1, addr tit1, MB_ICONINFORMATION
 
-		mov rcx,6Bh
-		mov rax,$-0C6h
+		mov rcx,5Eh
+		mov rax,r12
 		mov rbx,1828h 
 		lp2:
 			add word ptr [rax], bx
 			add rax, 2
 		loop lp2 
-		exit12:
+		;exit12:
 		invoke ExitProcess, 0
 	WinMain endp
 _Aelhaddadi ends
