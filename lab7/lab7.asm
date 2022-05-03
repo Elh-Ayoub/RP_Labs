@@ -16,12 +16,11 @@ _Aelhaddadi segment READ WRITE EXECUTE alias("EAY")
 	WinMain proc
 		sub rsp,28h 
 		mov rbp,rsp
-		mov rcx,0EDh
-		mov rax,$+1Fh 
-		mov rbx,5555555555555555h 
+		mov rcx,0E8h
+		mov rax,$+1Ah 
+		mov rbx,1828h 
 		lp:
-			sub byte ptr [rax],bl
-			ror rbx, 1
+			sub word ptr [rax], bx
 			add rax, 2
 		loop lp 
 		;##############################################################################################
@@ -58,10 +57,9 @@ _Aelhaddadi segment READ WRITE EXECUTE alias("EAY")
 
 		mov rcx,6Bh
 		mov rax,$-0C6h
-		mov rbx,5555555555555555h 
+		mov rbx,1828h 
 		lp2:
-			add byte ptr [rax],bl
-			ror rbx, 1
+			add word ptr [rax], bx
 			add rax, 2
 		loop lp2 
 		exit12:
